@@ -3,7 +3,6 @@ package bookStore.server;
 import bookStore.dao.UserDaoImp;
 import bookStore.dto.BookStoreDto;
 import bookStore.entity.User;
-import bookStore.util.ClientUiUtil;
 import bookStore.util.CommandType;
 
 /**
@@ -22,27 +21,34 @@ public class BookStoreServerUserController {
 	}
 	
 	//user process
-	public void userProcess(CommandType command, BookStoreDto dto) throws ClassNotFoundException {
+	public BookStoreDto userProcess(CommandType command, BookStoreDto dto) throws ClassNotFoundException {
 		switch(command) {
 			case LOGIN:
-				//TBD not yet
-				break;
+				
+				User loginUser = dao.getOneUserByUserId(dto.getUserName());
+				
+				if(loginUser != null && dto.getPassword().equals(loginUser.getPassword())) { 
+					dto.setUserType(loginUser.getType());
+					dto.setMessage(dto.getUserName() + ": login succeed");
+				} else {
+					dto = null;
+				}
+				return dto;
 			case LOGOUT:
 				//TBD not yet
-				break;
+				return null;
 			case REGISTERUSER:
 				User userToRegister = new User(dto.getUserId(), 
 						dto.getUserName(), dto.getUserType(), dto.getPassword());
 				if(dao.registerUser(userToRegister)) {
-					ClientUiUtil.systemOut("register succeeded");
+					dto.setMessage("register succeeded");
 				} else {
-					ClientUiUtil.systemOut("register failed");
+					dto.setMessage("register failed");
 				}
-					
-				break;
+				return dto;					
 			default:
 				//unrecognized command
-				break;
+				return null;
 		}
 	}
 }

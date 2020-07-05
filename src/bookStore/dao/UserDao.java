@@ -25,7 +25,7 @@ public interface UserDao {
 	public HashMap<String,User> getAll();
 
 	//get one exact user by name
-	public User getOneUserByName(String name);
+	public User getOneUserByUserId(String userId);
 
 	//get one exact user by id
 	public User getOneUserById(String id);

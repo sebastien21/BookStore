@@ -17,20 +17,22 @@ public class BookStoreDto {
 	private String password;
 	//userVersion
 	private int userVersion;
+	//message
+	private String message;
 	
 	//constructor
 	public BookStoreDto() {
 		//used when server just started
 	}
 	
-	//constructor
-	public BookStoreDto(String userId, String userName, int userType, String password, int userVersion) {
-		super();
+	//constructor for user dto
+	public BookStoreDto(String userId, String userName, int userType, String password, int userVersion, String message) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userType = userType;
 		this.password = password;
 		this.userVersion = userVersion;
+		this.message = message;
 	}
 
 	//getter&setter
@@ -64,4 +66,12 @@ public class BookStoreDto {
 	public void setUserVersion(int userVersion) {
 		this.userVersion = userVersion;
 	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String Message) {
+		this.message = Message;
+	}
+	
+	
 }

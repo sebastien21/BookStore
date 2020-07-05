@@ -61,7 +61,7 @@ public class UserDaoImp implements UserDao {
 		user.setId(getMaxId());
 		try {
 			//connect db
-		    Connection db = DriverManager.getConnection("jdbc:mysql://localhost/bookstore", "root", "rootliu");
+		    Connection db = DriverManager.getConnection("jdbc:mysql://localhost/BOOK_STORE_DB", "root", "sebastienliu1992");
 		    db.setAutoCommit(false);
 			
 			PreparedStatement stm = db.prepareStatement(insert);
@@ -113,9 +113,36 @@ public class UserDaoImp implements UserDao {
 	}
 
 	@Override
-	public User getOneUserByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getOneUserByUserId(String userId) {
+		String select = "SELECT ID, "+ 
+				"NAME, " + 
+				"TYPE, " + 
+				"PASSWORD, " + 
+				"VERSION FROM USER WHERE NAME = ?";
+		try {
+			//connect db
+		    Connection db = DriverManager.getConnection("jdbc:mysql://localhost/BOOK_STORE_DB", "root", "sebastienliu1992");
+		    db.setAutoCommit(false);
+			
+			PreparedStatement stm = db.prepareStatement(select);
+			stm.setString(1, userId);
+			System.out.println(stm.toString());
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				String id = rs.getString(1);
+				String name = rs.getString(2);
+				int type = rs.getInt(3);
+				String password = rs.getString(4);
+				User user = new User(id, name, type, password);
+				return user;
+			}
+			return null;
+		} catch(SQLException sql) {
+			sql.printStackTrace();
+			ClientUiUtil.systemOut("SQL failed");
+			return null;
+		}
+	
 	}
 
 	@Override

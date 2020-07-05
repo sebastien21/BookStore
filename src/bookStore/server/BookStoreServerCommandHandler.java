@@ -18,27 +18,26 @@ public class BookStoreServerCommandHandler {
 	}
 	
 	//start
-	public void start(CommandType command, BookStoreDto dto) throws ClassNotFoundException {
+	public BookStoreDto start(CommandType command, BookStoreDto dto) throws ClassNotFoundException {
 		this.user = new BookStoreServerUserController();
-		user.userProcess(command, dto);
+		return user.userProcess(command, dto);
 	}
 	
 	//process
-	public void process(CommandType command, BookStoreDto dto) throws ClassNotFoundException {
+	public BookStoreDto process(CommandType command, BookStoreDto dto) throws ClassNotFoundException {
 		switch (command){
 			case LOGIN:
 				//server user controller
-				break;
+				return user.userProcess(command, dto);
 			case LOGOUT:
-				//server user controller
-				break;
+				//TODO :server user controller
+				return null;
 			case REGISTERUSER:
 				//server user controller
-				user.userProcess(command, dto);
-				break;
+				return user.userProcess(command, dto);
 			default:
 				//TBD more function and error handling code
-				break;
+				return null;
 		}
 	}
 }
